@@ -11,33 +11,6 @@ const shouldSkipIntroByUrl = params.get("skipIntro") === "1";
 const introSeenInSession = sessionStorage.getItem("valentioIntroSeen") === "1";
 const shouldSkipIntro = shouldSkipIntroByUrl || introSeenInSession;
 
-function unlockMain() {
-    if (!main) return;
-    main.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "";
-}
-
-function removeIntro() {
-    if (!intro) return;
-    intro.style.display = "none";
-    intro.setAttribute("aria-hidden", "true");
-}
-
-function cleanSkipIntroFromUrl() {
-    const url = new URL(window.location.href);
-    url.searchParams.delete("skipIntro");
-    const finalUrl = `${url.pathname}${url.search}${url.hash}`;
-    window.history.replaceState({}, document.title, finalUrl);
-}
-
-if (shouldSkipIntro) {
-    unlockMain();
-    removeIntro();
-    cleanSkipIntroFromUrl();
-} else {
-    document.body.style.overflow = "hidden";
-}
-
 const playerEl = document.getElementById("musicPlayer");
 const trackTitleEl = document.getElementById("trackTitle");
 const trackArtistEl = document.getElementById("trackArtist");
@@ -52,6 +25,10 @@ const openQueueBtn = document.getElementById("openQueueBtn");
 const closeQueueBtn = document.getElementById("closeQueueBtn");
 const queuePanel = document.getElementById("queuePanel");
 const queueEl = document.getElementById("queue");
+
+const pageTransition = document.getElementById("pageTransition");
+const transitionVideo = document.getElementById("transitionVideo");
+const topicCards = document.querySelectorAll(".topicCard");
 
 const TRACKS = [
     { title: "Seasons", artist: "Wave to earth", src: "assets/music/track01.mp3" },
@@ -75,6 +52,54 @@ audio.loop = false;
 let currentIndex = 0;
 let isUserSeeking = false;
 let resumeMusicListenersAttached = false;
+let isEntering = false;
+let isTransitioning = false;
+let transitionKeyHandler = null;
+
+function unlockMain() {
+    if (!main) return;
+    main.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "";
+}
+
+function removeIntro() {
+    if (!intro) return;
+    intro.style.display = "none";
+    intro.setAttribute("aria-hidden", "true");
+}
+
+function cleanSkipIntroFromUrl() {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("skipIntro");
+    const finalUrl = `${url.pathname}${url.search}${url.hash}`;
+    window.history.replaceState({}, document.title, finalUrl);
+}
+
+function resetPageTransitionState() {
+    if (!pageTransition || !transitionVideo) return;
+
+    isTransitioning = false;
+    pageTransition.classList.remove("is-active");
+    pageTransition.setAttribute("aria-hidden", "true");
+    pageTransition.onclick = null;
+
+    if (transitionKeyHandler) {
+        document.removeEventListener("keydown", transitionKeyHandler);
+        transitionKeyHandler = null;
+    }
+
+    transitionVideo.pause();
+    transitionVideo.removeAttribute("src");
+    transitionVideo.innerHTML = "";
+    transitionVideo.currentTime = 0;
+    transitionVideo.onloadedmetadata = null;
+    transitionVideo.onended = null;
+    transitionVideo.onerror = null;
+
+    if (!intro || intro.style.display === "none" || shouldSkipIntro) {
+        document.body.style.overflow = "";
+    }
+}
 
 function fmtTime(sec) {
     if (!Number.isFinite(sec) || sec < 0) return "0:00";
@@ -199,6 +224,166 @@ function stopHomepageMusic() {
     cleanupResumeListeners();
 }
 
+function showPlayerAndAutoplay() {
+    if (!playerEl) return;
+    playerEl.classList.add("is-visible");
+    playerEl.setAttribute("aria-hidden", "false");
+    tryAutoplay();
+}
+
+function showPlayerOnly() {
+    if (!playerEl) return;
+    playerEl.classList.add("is-visible");
+    playerEl.setAttribute("aria-hidden", "false");
+}
+
+function openQueue() {
+    if (!queuePanel) return;
+    queuePanel.classList.add("is-open");
+    queuePanel.setAttribute("aria-hidden", "false");
+}
+
+function closeQueue() {
+    if (!queuePanel) return;
+    queuePanel.classList.remove("is-open");
+    queuePanel.setAttribute("aria-hidden", "true");
+}
+
+function startEnter() {
+    if (!intro || !portal || !main) return;
+    if (intro.classList.contains("is-starting") || isEntering) return;
+
+    isEntering = true;
+    sessionStorage.setItem("valentioIntroSeen", "1");
+
+    showPlayerAndAutoplay();
+
+    intro.classList.add("is-starting");
+    portal.setAttribute("aria-hidden", "false");
+
+    window.setTimeout(() => {
+        intro.classList.add("is-fading");
+        unlockMain();
+    }, 820);
+
+    window.setTimeout(() => {
+        removeIntro();
+        cleanSkipIntroFromUrl();
+    }, 1320);
+}
+
+function goToTopic(card) {
+    if (!card || isTransitioning) return;
+
+    const target = card.dataset.target;
+    const transitionSrc = card.dataset.transition;
+
+    if (!target) return;
+
+    stopHomepageMusic();
+
+    if (!transitionSrc || !pageTransition || !transitionVideo) {
+        window.location.href = target;
+        return;
+    }
+
+    isTransitioning = true;
+    document.body.style.overflow = "hidden";
+
+    pageTransition.classList.add("is-active");
+    pageTransition.setAttribute("aria-hidden", "false");
+
+    transitionVideo.pause();
+    transitionVideo.innerHTML = "";
+    transitionVideo.muted = false;
+    transitionVideo.volume = 1;
+    transitionVideo.currentTime = 0;
+
+    const source = document.createElement("source");
+    source.src = transitionSrc;
+    source.type = "video/mp4";
+    transitionVideo.appendChild(source);
+    transitionVideo.load();
+
+    const cleanup = () => {
+        if (transitionKeyHandler) {
+            document.removeEventListener("keydown", transitionKeyHandler);
+            transitionKeyHandler = null;
+        }
+        pageTransition.onclick = null;
+    };
+
+    const finish = () => {
+        if (!isTransitioning) return;
+        cleanup();
+        isTransitioning = false;
+        window.location.href = target;
+    };
+
+    function skipTransition() {
+        finish();
+    }
+
+    transitionKeyHandler = (e) => {
+        if (e.key === " " || e.key === "Enter") {
+            e.preventDefault();
+            skipTransition();
+        }
+    };
+
+    pageTransition.onclick = skipTransition;
+    document.addEventListener("keydown", transitionKeyHandler);
+
+    transitionVideo.onloadedmetadata = () => {
+        transitionVideo.currentTime = 0;
+        transitionVideo.play().catch(() => {
+            finish();
+        });
+    };
+
+    transitionVideo.onended = () => {
+        finish();
+    };
+
+    transitionVideo.onerror = () => {
+        finish();
+    };
+}
+
+/* Initial state */
+if (shouldSkipIntro) {
+    unlockMain();
+    removeIntro();
+    cleanSkipIntroFromUrl();
+} else {
+    document.body.style.overflow = "hidden";
+}
+
+/* Critical fix for browser back / bfcache glitch */
+resetPageTransitionState();
+
+window.addEventListener("pageshow", () => {
+    resetPageTransitionState();
+
+    if (shouldSkipIntro || sessionStorage.getItem("valentioIntroSeen") === "1") {
+        unlockMain();
+        removeIntro();
+        cleanSkipIntroFromUrl();
+        showPlayerOnly();
+    }
+});
+
+window.addEventListener("popstate", () => {
+    resetPageTransitionState();
+});
+
+document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+        resetPageTransitionState();
+    }
+});
+
+/* Audio events */
 audio.addEventListener("loadedmetadata", () => {
     if (timeDurEl) timeDurEl.textContent = fmtTime(audio.duration);
 });
@@ -245,18 +430,6 @@ if (seekEl) {
     });
 }
 
-function openQueue() {
-    if (!queuePanel) return;
-    queuePanel.classList.add("is-open");
-    queuePanel.setAttribute("aria-hidden", "false");
-}
-
-function closeQueue() {
-    if (!queuePanel) return;
-    queuePanel.classList.remove("is-open");
-    queuePanel.setAttribute("aria-hidden", "true");
-}
-
 if (openQueueBtn) {
     openQueueBtn.addEventListener("click", () => {
         if (!queuePanel) return;
@@ -277,49 +450,12 @@ document.addEventListener("click", (e) => {
 renderQueue();
 loadTrack(0, false);
 
-function showPlayerAndAutoplay() {
-    if (!playerEl) return;
-    playerEl.classList.add("is-visible");
-    playerEl.setAttribute("aria-hidden", "false");
-    tryAutoplay();
-}
-
-function showPlayerOnly() {
-    if (!playerEl) return;
-    playerEl.classList.add("is-visible");
-    playerEl.setAttribute("aria-hidden", "false");
-}
-
 if (shouldSkipIntro) {
     showPlayerOnly();
     tryAutoplay();
 }
 
-let isEntering = false;
-
-function startEnter() {
-    if (!intro || !portal || !main) return;
-    if (intro.classList.contains("is-starting") || isEntering) return;
-
-    isEntering = true;
-    sessionStorage.setItem("valentioIntroSeen", "1");
-
-    showPlayerAndAutoplay();
-
-    intro.classList.add("is-starting");
-    portal.setAttribute("aria-hidden", "false");
-
-    window.setTimeout(() => {
-        intro.classList.add("is-fading");
-        unlockMain();
-    }, 820);
-
-    window.setTimeout(() => {
-        removeIntro();
-        cleanSkipIntroFromUrl();
-    }, 1320);
-}
-
+/* Intro enter */
 if (enterBtn) {
     enterBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -342,6 +478,7 @@ if (intro) {
     });
 }
 
+/* Autoplay previews */
 const previewVideos = document.querySelectorAll("video[data-autoplay]");
 
 const io = new IntersectionObserver(
@@ -362,87 +499,7 @@ const io = new IntersectionObserver(
 
 previewVideos.forEach((video) => io.observe(video));
 
-const topicCards = document.querySelectorAll(".topicCard");
-const pageTransition = document.getElementById("pageTransition");
-const transitionVideo = document.getElementById("transitionVideo");
-
-let isTransitioning = false;
-
-function goToTopic(card) {
-    if (!card || isTransitioning) return;
-
-    const target = card.dataset.target;
-    const transitionSrc = card.dataset.transition;
-
-    if (!target) return;
-
-    stopHomepageMusic();
-
-    if (!transitionSrc || !pageTransition || !transitionVideo) {
-        window.location.href = target;
-        return;
-    }
-
-    isTransitioning = true;
-    document.body.style.overflow = "hidden";
-
-    pageTransition.classList.add("is-active");
-    pageTransition.setAttribute("aria-hidden", "false");
-
-    transitionVideo.pause();
-    transitionVideo.innerHTML = "";
-    transitionVideo.muted = false;
-    transitionVideo.volume = 1;
-    transitionVideo.currentTime = 0;
-
-    const source = document.createElement("source");
-    source.src = transitionSrc;
-    source.type = "video/mp4";
-    transitionVideo.appendChild(source);
-    transitionVideo.load();
-
-    const cleanup = () => {
-        document.removeEventListener("keydown", handleKey);
-        pageTransition.onclick = null;
-    };
-
-    const finish = () => {
-        if (!isTransitioning) return;
-        cleanup();
-        isTransitioning = false;
-        window.location.href = target;
-    };
-
-    function skipTransition() {
-        finish();
-    }
-
-    function handleKey(e) {
-        if (e.key === " " || e.key === "Enter") {
-            e.preventDefault();
-            skipTransition();
-        }
-    }
-
-    pageTransition.onclick = skipTransition;
-    document.addEventListener("keydown", handleKey);
-
-    transitionVideo.onloadedmetadata = () => {
-        transitionVideo.currentTime = 0;
-        transitionVideo.play().catch(() => {
-            finish();
-        });
-    };
-
-    transitionVideo.onended = () => {
-        finish();
-    };
-
-    transitionVideo.onerror = () => {
-        finish();
-    };
-}
-
+/* Topic click */
 topicCards.forEach((card) => {
     card.addEventListener("click", () => goToTopic(card));
 
