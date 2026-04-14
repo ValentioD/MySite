@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Valentio - Youth</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .youthSection{
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
+
+        .pageIntroGrid{
+            display:grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap:24px;
+            align-items:stretch;
+        }
+
+        .introCard{
+            border:1px solid rgba(245,246,248,.12);
+            background: rgba(245,246,248,.03);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .introCard .p{
+            max-width:none;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .factsGrid{
+            display:grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap:12px;
+            margin-top: 18px;
+        }
+
+        .factCard{
+            border:1px solid rgba(245,246,248,.10);
+            background: rgba(245,246,248,.03);
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .factCard__label{
+            font-family: var(--condensed);
+            text-transform: uppercase;
+            letter-spacing: .14em;
+            font-size: 10px;
+            color: rgba(245,246,248,.56);
+            margin-bottom: 8px;
+        }
+
+        .factCard__value{
+            font-family: var(--condensed);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            font-size: 15px;
+            color: rgba(245,246,248,.92);
+            line-height: 1.2;
+        }
+
+        .youthHighlightCard{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            min-height:100%;
+            text-align:center;
+            padding: 34px;
+            overflow:hidden;
+            position:relative;
+        }
+
+        .youthHighlightCard::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:
+                    radial-gradient(circle at top center, rgba(255,255,255,.06), transparent 38%),
+                    linear-gradient(180deg, rgba(245,246,248,.03), rgba(245,246,248,.01));
+            pointer-events:none;
+        }
+
+        .youthHighlightInner{
+            position:relative;
+            z-index:1;
+            width:100%;
+            max-width: 520px;
+            margin: 0 auto;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .youthHighlightQuote{
+            font-family: var(--condensed);
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            font-size: clamp(26px, 3vw, 46px);
+            line-height: 1.04;
+            color: rgba(245,246,248,.95);
+            margin: 0 auto 20px;
+            max-width: 11ch;
+            text-wrap: balance;
+        }
+
+        .youthHighlightText{
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--muted);
+            max-width: 34ch;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 900px){
+            .pageIntroGrid{
+                grid-template-columns: 1fr;
+            }
+
+            .youthHighlightQuote{
+                max-width: 14ch;
+            }
+        }
+
+        @media (max-width: 560px){
+            .factsGrid{
+                grid-template-columns: 1fr;
+            }
+
+            .youthHighlightCard{
+                padding: 26px 20px;
+            }
+
+            .youthHighlightQuote{
+                font-size: clamp(22px, 9vw, 34px);
+                max-width: none;
+            }
+
+            .youthHighlightText{
+                font-size: 15px;
+                line-height: 1.7;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar__brand">VALENTIO</div>
+    <nav class="topbar__nav">
+        <a href="index.html?skipIntro=1#subjects">DESTINATIONS</a>
+        <a href="guitar.html">GUITAR</a>
+        <a href="gaming.html">GAMING</a>
+        <a href="volleyball.html">VOLLEYBALL</a>
+    </nav>
+</header>
+
+<main>
+    <section class="detailHero">
+        <video class="detailHero__video" autoplay muted loop playsinline preload="metadata">
+            <source src="assets/jeugd.mp4" type="video/mp4" />
+        </video>
+        <div class="detailHero__overlay"></div>
+
+        <div class="container detailHero__content">
+            <h1 class="h2">🧠 YOUTH</h1>
+            <p class="p">This page shows my background, what shaped my mindset, and why that matters in how I present myself today.</p>
+            <p class="scrollHint">SCROLL DOWN FOR MY STORY, IDENTITY, POSITIONING AND CONTACT</p>
+        </div>
+    </section>
+
+    <section class="section youthSection">
+        <div class="container detailPageStack">
+            <div class="pageIntroGrid">
+                <div class="introCard">
+                    <h2 class="detailCard__title">🧒 MY STORY</h2>
+                    <p class="p">
+                        My youth shaped a big part of who I am. I grew up with my grandparents, together with my older sister, and that gave me a strong sense of family, loyalty and responsibility.
+                        <br><br>
+                        My background is mixed and personal. On my mother’s side I am Javanese Surinamese, while on my father’s side my roots are British and German. That mix gave me a broader perspective on identity, culture and the way people grow up differently.
+                        <br><br>
+                        Because of those experiences, I developed a mindset that is resilient, adaptable and focused on personal growth. That is still visible in how I think, communicate and carry myself now.
+                    </p>
+
+                    <div class="factsGrid">
+                        <div class="factCard">
+                            <div class="factCard__label">Core Trait</div>
+                            <div class="factCard__value">Resilient</div>
+                        </div>
+
+                        <div class="factCard">
+                            <div class="factCard__label">Background</div>
+                            <div class="factCard__value">Multicultural</div>
+                        </div>
+
+                        <div class="factCard">
+                            <div class="factCard__label">Value</div>
+                            <div class="factCard__value">Loyalty</div>
+                        </div>
+
+                        <div class="factCard">
+                            <div class="factCard__label">Focus</div>
+                            <div class="factCard__value">Growth</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="introCard youthHighlightCard">
+                    <div class="youthHighlightInner">
+                        <h2 class="youthHighlightQuote">
+                            My background gave me depth, perspective and a strong sense of identity.
+                        </h2>
+                        <p class="youthHighlightText">
+                            The way I grew up shaped how I look at people, culture and personal development. That gives this page its identity and makes my story more than surface level.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detailGrid detailGrid--equal">
+                <div class="detailCard">
+                    <h2 class="detailCard__title">🎯 POSITIONING</h2>
+                    <p class="p">
+                        I position myself as someone with a strong personal foundation, multicultural roots and a mindset built on resilience, loyalty and growth. This page is not only about where I come from, but also about what that background adds to the way I think and connect with people.
+                    </p>
+                </div>
+
+                <div class="detailCard">
+                    <h2 class="detailCard__title">🔥 UNIQUE SELLING POINT</h2>
+                    <p class="p">
+                        What makes me different is that my identity is shaped by real life experience, a multicultural background and a strong family foundation. That gives me perspective, adaptability and depth that go beyond appearance and make my personal brand feel more genuine and memorable.
+                    </p>
+                </div>
+            </div>
+
+            <div class="detailGrid detailGrid--equal">
+                <div class="detailCard">
+                    <h2 class="detailCard__title">💪 SKILLS</h2>
+                    <div class="skillChips">
+                        <span class="skillChip">RESILIENT</span>
+                        <span class="skillChip">ADAPTABLE</span>
+                        <span class="skillChip">LOYAL</span>
+                        <span class="skillChip">SELF-AWARE</span>
+                        <span class="skillChip">MULTICULTURAL PERSPECTIVE</span>
+                        <span class="skillChip">PERSONAL DEPTH</span>
+                    </div>
+
+                    <ul class="detailList">
+                        <li>Strong sense of identity shaped by different life experiences.</li>
+                        <li>Able to connect with people from different backgrounds.</li>
+                        <li>Grounded in loyalty, consistency and long-term growth.</li>
+                        <li>Brings depth, reflection and perspective into communication.</li>
+                    </ul>
+                </div>
+
+                <div class="detailCard">
+                    <h2 class="detailCard__title">👥 CONNECTION</h2>
+                    <p class="p">
+                        This side connects most with people who value story, identity, background, culture and personal growth, and who look for meaning behind the way someone presents themselves.
+                    </p>
+                </div>
+            </div>
+
+            <div class="detailCard">
+                <h2 class="detailCard__title">📩 CALL TO ACTION</h2>
+                <p class="p">
+                    Want to know more about my background, identity or personal story? Contact me directly by email or Discord and start the conversation there.
+                </p>
+
+                <div class="contactStack">
+                    <a class="contactCard" href="mailto:valentiodoelasan@gmail.com?subject=Youth%20Contact">
+                        <span class="contactCard__label">📧 EMAIL</span>
+                        <span class="contactCard__value">valentiodoelasan@gmail.com</span>
+                    </a>
+
+                    <a
+                            class="contactCard"
+                            href="https://discord.com/app"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onclick="navigator.clipboard.writeText('valentio.');"
+                            title="Open Discord and copy username"
+                    >
+                        <span class="contactCard__label">🎮 DISCORD</span>
+                        <span class="contactCard__value">valentio.</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

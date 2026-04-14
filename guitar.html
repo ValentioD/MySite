@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentio - Guitar</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .videoSoundBtn{
+      position: absolute;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%);
+      z-index: 4;
+      font-family: var(--condensed);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 12px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(245,246,248,.18);
+      background: rgba(7,8,11,.58);
+      color: rgba(245,246,248,.92);
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+    }
+
+    .videoSoundBtn:hover{
+      transform: translateX(-50%) translateY(-1px);
+      background: rgba(245,246,248,.06);
+      border-color: rgba(245,246,248,.28);
+    }
+
+    .pageIntroGrid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .introCard{
+      border:1px solid rgba(245,246,248,.12);
+      background: rgba(245,246,248,.03);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .introCard .p{
+      max-width:none;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .factsGrid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:12px;
+      margin-top: 18px;
+    }
+
+    .factCard{
+      border:1px solid rgba(245,246,248,.10);
+      background: rgba(245,246,248,.03);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .factCard__label{
+      font-family: var(--condensed);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 10px;
+      color: rgba(245,246,248,.56);
+      margin-bottom: 8px;
+    }
+
+    .factCard__value{
+      font-family: var(--condensed);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-size: 15px;
+      color: rgba(245,246,248,.92);
+      line-height: 1.2;
+    }
+
+    .highlightCard{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100%;
+      position:relative;
+      overflow:hidden;
+      text-align:center;
+      padding: 34px;
+    }
+
+    .highlightCard::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+              radial-gradient(circle at top center, rgba(255,255,255,.06), transparent 38%),
+              linear-gradient(180deg, rgba(245,246,248,.03), rgba(245,246,248,.01));
+      pointer-events:none;
+    }
+
+    .highlightCard__inner{
+      position:relative;
+      z-index:1;
+      width:100%;
+      max-width: 520px;
+      margin: 0 auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .highlightQuote{
+      font-family: var(--condensed);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-size: clamp(26px, 3vw, 46px);
+      line-height: 1.04;
+      color: rgba(245,246,248,.95);
+      margin: 0 0 20px;
+      max-width: 11ch;
+      text-wrap: balance;
+    }
+
+    .highlightText{
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 34ch;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px){
+      .pageIntroGrid{
+        grid-template-columns: 1fr;
+      }
+
+      .highlightQuote{
+        max-width: 14ch;
+      }
+    }
+
+    @media (max-width: 560px){
+      .factsGrid{
+        grid-template-columns: 1fr;
+      }
+
+      .highlightCard{
+        padding: 26px 20px;
+      }
+
+      .highlightQuote{
+        font-size: clamp(22px, 9vw, 34px);
+        max-width: none;
+      }
+
+      .highlightText{
+        font-size: 15px;
+        line-height: 1.7;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__brand">VALENTIO</div>
+  <nav class="topbar__nav">
+    <a href="index.html?skipIntro=1#subjects">DESTINATIONS</a>
+    <a href="youth.html">YOUTH</a>
+    <a href="gaming.html">GAMING</a>
+    <a href="volleyball.html">VOLLEYBALL</a>
+  </nav>
+</header>
+
+<main>
+  <section class="detailHero">
+    <video
+            id="guitarMainVideo"
+            class="detailHero__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            controls
+    >
+      <source src="assets/guitar.mp4" type="video/mp4" />
+    </video>
+
+    <div class="detailHero__overlay"></div>
+    <button id="videoSoundBtn" class="videoSoundBtn" type="button">ENABLE SOUND</button>
+
+    <div class="container detailHero__content">
+      <h1 class="h2">🎸 GUITAR</h1>
+      <p class="p">This page translates my music side into a clear personal brand: story, identity, value and direct connection.</p>
+      <p class="scrollHint">SCROLL DOWN FOR MY STORY, POSITIONING, USP, SKILLS AND CONTACT</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container detailPageStack">
+      <div class="pageIntroGrid">
+        <div class="introCard">
+          <h2 class="detailCard__title">🎵 MY STORY</h2>
+          <p class="p">
+            I have been playing guitar for more than 10 years. It started because of my older sister, but over time it became something that was fully mine.
+            <br><br>
+            Guitar became one of the main ways I express myself. I enjoy the calm, the focus and the atmosphere it gives me more than anything else.
+            <br><br>
+            I have played in two bands and performed live twice, but I still enjoy playing alone the most. That is where I feel most connected to the music.
+          </p>
+
+          <div class="factsGrid">
+            <div class="factCard">
+              <div class="factCard__label">Experience</div>
+              <div class="factCard__value">10+ Years</div>
+            </div>
+
+            <div class="factCard">
+              <div class="factCard__label">Live Shows</div>
+              <div class="factCard__value">2 Performances</div>
+            </div>
+
+            <div class="factCard">
+              <div class="factCard__label">Bands</div>
+              <div class="factCard__value">2 Bands</div>
+            </div>
+
+            <div class="factCard">
+              <div class="factCard__label">Style</div>
+              <div class="factCard__value">Emotional & Atmospheric</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="introCard highlightCard">
+          <div class="highlightCard__inner">
+            <h2 class="highlightQuote">Music is where I slow down and say the most without talking.</h2>
+            <p class="highlightText">
+              My guitar side is built on emotion, consistency and atmosphere. That gives this part of my brand a clear and personal identity.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="detailGrid detailGrid--equal">
+        <div class="detailCard">
+          <h2 class="detailCard__title">🎯 POSITIONING</h2>
+          <p class="p">
+            I position myself as a guitarist who focuses on feeling, atmosphere and personal expression rather than only technique. This page shows music as a real part of my identity, not as a random hobby.
+          </p>
+        </div>
+
+        <div class="detailCard">
+          <h2 class="detailCard__title">🔥 UNIQUE SELLING POINT</h2>
+          <p class="p">
+            What makes this side of me stand out is the combination of long-term experience, live performance background and a playing style that feels personal instead of generic. I do not only play songs; I use music to create mood and identity.
+          </p>
+        </div>
+      </div>
+
+      <div class="detailGrid detailGrid--equal">
+        <div class="detailCard">
+          <h2 class="detailCard__title">💪 SKILLS</h2>
+          <div class="skillChips">
+            <span class="skillChip">10+ YEARS PLAYING</span>
+            <span class="skillChip">ACOUSTIC GUITAR</span>
+            <span class="skillChip">LIVE PERFORMANCE</span>
+            <span class="skillChip">BAND EXPERIENCE</span>
+            <span class="skillChip">EMOTIONAL PLAYSTYLE</span>
+            <span class="skillChip">ATMOSPHERE</span>
+          </div>
+
+          <ul class="detailList">
+            <li>Strong sense for mood and emotion in music.</li>
+            <li>Comfortable with different music styles.</li>
+            <li>Experience playing solo and with others.</li>
+            <li>Consistent and patient through long-term practice.</li>
+          </ul>
+        </div>
+
+        <div class="detailCard">
+          <h2 class="detailCard__title">👥 CONNECTION</h2>
+          <p class="p">
+            This part connects best with people who enjoy music, creativity, real expression, collaboration and shared atmosphere.
+          </p>
+        </div>
+      </div>
+
+      <div class="detailCard">
+        <h2 class="detailCard__title">📩 CALL TO ACTION</h2>
+        <p class="p">
+          Want to talk music, exchange ideas, jam together or connect through this side of my identity? Contact me directly by email or Discord and start the conversation there.
+        </p>
+
+        <div class="contactStack">
+          <a class="contactCard" href="mailto:valentiodoelasan@gmail.com?subject=Guitar%20Contact">
+            <span class="contactCard__label">📧 EMAIL</span>
+            <span class="contactCard__value">valentiodoelasan@gmail.com</span>
+          </a>
+
+          <a
+                  class="contactCard"
+                  href="https://discord.com/app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onclick="navigator.clipboard.writeText('valentio.');"
+                  title="Open Discord and copy username"
+          >
+            <span class="contactCard__label">🎮 DISCORD</span>
+            <span class="contactCard__value">valentio.</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const guitarMainVideo = document.getElementById("guitarMainVideo");
+  const videoSoundBtn = document.getElementById("videoSoundBtn");
+
+  function ensureVideoStarts() {
+    if (!guitarMainVideo) return;
+    guitarMainVideo.currentTime = 0;
+    const playPromise = guitarMainVideo.play();
+    if (playPromise !== undefined) playPromise.catch(() => {});
+  }
+
+  window.addEventListener("load", ensureVideoStarts);
+
+  if (videoSoundBtn && guitarMainVideo) {
+    videoSoundBtn.addEventListener("click", async () => {
+      try {
+        guitarMainVideo.muted = false;
+        guitarMainVideo.volume = 1;
+        guitarMainVideo.currentTime = 0;
+        await guitarMainVideo.play();
+        videoSoundBtn.style.display = "none";
+      } catch {
+        guitarMainVideo.muted = true;
+      }
+    });
+  }
+
+  if (guitarMainVideo) {
+    guitarMainVideo.addEventListener("ended", () => {
+      guitarMainVideo.currentTime = 0;
+      guitarMainVideo.play().catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>

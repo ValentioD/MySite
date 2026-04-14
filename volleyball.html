@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Valentio - Volleyball</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .pageIntroGrid{
+            display:grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap:24px;
+            align-items:stretch;
+        }
+
+        .introCard{
+            border:1px solid rgba(245,246,248,.12);
+            background: rgba(245,246,248,.03);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .introCard .p{
+            max-width:none;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .factsGrid{
+            display:grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap:12px;
+            margin-top: 18px;
+        }
+
+        .factCard{
+            border:1px solid rgba(245,246,248,.10);
+            background: rgba(245,246,248,.03);
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .factCard__label{
+            font-family: var(--condensed);
+            text-transform: uppercase;
+            letter-spacing: .14em;
+            font-size: 10px;
+            color: rgba(245,246,248,.56);
+            margin-bottom: 8px;
+        }
+
+        .factCard__value{
+            font-family: var(--condensed);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            font-size: 15px;
+            color: rgba(245,246,248,.92);
+            line-height: 1.2;
+        }
+
+        .mediaWrap{
+            margin-top: 18px;
+            border:1px solid rgba(245,246,248,.10);
+            background: rgba(245,246,248,.03);
+            border-radius: 16px;
+            overflow:hidden;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding: 10px;
+        }
+
+        .mediaWrap video{
+            width:min(100%, 320px);
+            aspect-ratio: 9 / 16;
+            object-fit: contain;
+            display:block;
+            border-radius: 12px;
+            background:#000;
+        }
+
+        .highlightCard{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            min-height:100%;
+            position:relative;
+            overflow:hidden;
+            text-align:center;
+            padding: 34px;
+        }
+
+        .highlightCard::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:
+                    radial-gradient(circle at top center, rgba(255,255,255,.06), transparent 38%),
+                    linear-gradient(180deg, rgba(245,246,248,.03), rgba(245,246,248,.01));
+            pointer-events:none;
+        }
+
+        .highlightCard__inner{
+            position:relative;
+            z-index:1;
+            width:100%;
+            max-width: 520px;
+            margin: 0 auto;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .highlightQuote{
+            font-family: var(--condensed);
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            font-size: clamp(26px, 3vw, 46px);
+            line-height: 1.04;
+            color: rgba(245,246,248,.95);
+            margin: 0 0 20px;
+            max-width: 12ch;
+            text-wrap: balance;
+        }
+
+        .highlightText{
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--muted);
+            max-width: 34ch;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 900px){
+            .pageIntroGrid{
+                grid-template-columns: 1fr;
+            }
+
+            .highlightQuote{
+                max-width: 14ch;
+            }
+        }
+
+        @media (max-width: 560px){
+            .factsGrid{
+                grid-template-columns: 1fr;
+            }
+
+            .highlightCard{
+                padding: 26px 20px;
+            }
+
+            .highlightQuote{
+                font-size: clamp(22px, 9vw, 34px);
+                max-width: none;
+            }
+
+            .highlightText{
+                font-size: 15px;
+                line-height: 1.7;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar__brand">VALENTIO</div>
+    <nav class="topbar__nav">
+        <a href="index.html?skipIntro=1#subjects">DESTINATIONS</a>
+        <a href="guitar.html">GUITAR</a>
+        <a href="youth.html">YOUTH</a>
+        <a href="gaming.html">GAMING</a>
+    </nav>
+</header>
+
+<main>
+    <section class="detailHero">
+        <video class="detailHero__video" autoplay muted loop playsinline preload="metadata">
+            <source src="assets/volley.mp4" type="video/mp4" />
+        </video>
+        <div class="detailHero__overlay"></div>
+
+        <div class="container detailHero__content">
+            <h1 class="h2">🏐 VOLLEYBALL</h1>
+            <p class="p">This page shows my sports side: discipline, energy, teamplay and the performance mindset behind it.</p>
+            <p class="scrollHint">SCROLL DOWN FOR MY STORY, POSITIONING, USP, SKILLS AND CONTACT</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container detailPageStack">
+            <div class="pageIntroGrid">
+                <div class="introCard">
+                    <h2 class="detailCard__title">🏐 MY STORY</h2>
+                    <p class="p">
+                        Volleyball is one of the strongest physical parts of my identity. I enjoy the speed, teamwork, pressure and explosive energy that come with the sport.
+                        <br><br>
+                        What attracts me most is the balance between discipline and aggression. You need timing, control, communication and confidence at the same time.
+                        <br><br>
+                        Volleyball is not only about playing matches for me. It also represents consistency, self-improvement and performing as part of a team.
+                    </p>
+
+                    <div class="factsGrid">
+                        <div class="factCard">
+                            <div class="factCard__label">Focus</div>
+                            <div class="factCard__value">Team Performance</div>
+                        </div>
+
+                        <div class="factCard">
+                            <div class="factCard__label">Identity</div>
+                            <div class="factCard__value">Explosive & Disciplined</div>
+                        </div>
+
+                        <div class="factCard">
+                            <div class="factCard__label">Strength</div>
+                            <div class="factCard__value">Timing & Power</div>
+                        </div>
+
+                        <div class="factCard">
+                            <div class="factCard__label">Mindset</div>
+                            <div class="factCard__value">Competitive</div>
+                        </div>
+                    </div>
+
+                    <div class="mediaWrap">
+                        <video autoplay muted loop playsinline preload="metadata" controls>
+                            <source src="assets/volley.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                </div>
+
+                <div class="introCard highlightCard">
+                    <div class="highlightCard__inner">
+                        <h2 class="highlightQuote">Volleyball is where discipline, energy and teamplay come together.</h2>
+                        <p class="highlightText">
+                            This side of me is built on movement, control and performance under pressure. That gives it a clear and athletic identity.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detailGrid detailGrid--equal">
+                <div class="detailCard">
+                    <h2 class="detailCard__title">🎯 POSITIONING</h2>
+                    <p class="p">
+                        I position myself as someone who brings discipline, explosiveness and team awareness into sport. Volleyball represents the physical and competitive side of my personal brand.
+                    </p>
+                </div>
+
+                <div class="detailCard">
+                    <h2 class="detailCard__title">🔥 UNIQUE SELLING POINT</h2>
+                    <p class="p">
+                        What makes this side stand out is the combination of athletic energy, team discipline and a strong performance mindset. I bring intensity, focus and consistency instead of only enthusiasm.
+                    </p>
+                </div>
+            </div>
+
+            <div class="detailGrid detailGrid--equal">
+                <div class="detailCard">
+                    <h2 class="detailCard__title">💪 SKILLS</h2>
+                    <div class="skillChips">
+                        <span class="skillChip">TEAMPLAY</span>
+                        <span class="skillChip">DISCIPLINE</span>
+                        <span class="skillChip">EXPLOSIVENESS</span>
+                        <span class="skillChip">TIMING</span>
+                        <span class="skillChip">COMPETITIVE DRIVE</span>
+                        <span class="skillChip">CONSISTENCY</span>
+                    </div>
+
+                    <ul class="detailList">
+                        <li>Strong team awareness and communication.</li>
+                        <li>Explosive mindset in sport and competition.</li>
+                        <li>Focus on timing, repetition and improvement.</li>
+                        <li>Performance-driven attitude under pressure.</li>
+                    </ul>
+                </div>
+
+                <div class="detailCard">
+                    <h2 class="detailCard__title">👥 CONNECTION</h2>
+                    <p class="p">
+                        This side connects best with people who enjoy sports, team culture, discipline, physical performance, competition and the mentality that comes with improving together.
+                    </p>
+                </div>
+            </div>
+
+            <div class="detailCard">
+                <h2 class="detailCard__title">📩 CALL TO ACTION</h2>
+                <p class="p">
+                    Want to connect through volleyball, sport, competition or team mentality? Contact me directly by email or Discord and continue from there.
+                </p>
+
+                <div class="contactStack">
+                    <a class="contactCard" href="mailto:valentiodoelasan@gmail.com?subject=Volleyball%20Contact">
+                        <span class="contactCard__label">📧 EMAIL</span>
+                        <span class="contactCard__value">valentiodoelasan@gmail.com</span>
+                    </a>
+
+                    <a
+                            class="contactCard"
+                            href="https://discord.com/app"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onclick="navigator.clipboard.writeText('valentio.');"
+                            title="Open Discord and copy username"
+                    >
+                        <span class="contactCard__label">🎮 DISCORD</span>
+                        <span class="contactCard__value">valentio.</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

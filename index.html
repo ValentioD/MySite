@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Valentio</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="musicPlayer" class="miniPlayer" aria-hidden="true">
+    <button id="playBtn" class="mBtn mBtn--play" type="button" aria-label="Play or pause music">▶</button>
+    <button id="nextBtn" class="mBtn" type="button" aria-label="Next track">→</button>
+
+    <div class="mInfo">
+        <div id="trackTitle" class="mTitle">—</div>
+        <div class="mSub">
+            <span id="trackArtist">—</span>
+            <span class="mDot">•</span>
+            <span id="trackIndex">0/0</span>
+        </div>
+    </div>
+
+    <button id="openQueueBtn" class="mBtn mBtn--queue" type="button" aria-label="Open queue">≡</button>
+
+    <div id="queuePanel" class="queuePanel" aria-hidden="true">
+        <div class="queuePanel__head">
+            <div class="queuePanel__title">QUEUE</div>
+            <button id="closeQueueBtn" class="mBtn mBtn--close" type="button" aria-label="Close queue">✕</button>
+        </div>
+
+        <div class="queuePanel__body">
+            <div class="queuePanel__row">
+                <span id="timeCur" class="qTime">0:00</span>
+                <input id="seek" class="qSeek" type="range" min="0" max="1000" value="0" />
+                <span id="timeDur" class="qTime">0:00</span>
+            </div>
+
+            <div class="queuePanel__row">
+                <span class="qVolIcon">VOL</span>
+                <input id="vol" class="qVol" type="range" min="0" max="100" value="60" />
+            </div>
+
+            <div id="queue" class="queueList"></div>
+        </div>
+    </div>
+</div>
+
+<div id="intro" class="intro" aria-hidden="false" tabindex="0">
+    <div class="intro__bg">
+        <video id="eyeVideo" class="intro__media" autoplay muted playsinline preload="auto">
+            <source src="assets/eye.mp4" type="video/mp4" />
+        </video>
+        <div class="intro__vignette"></div>
+        <div class="intro__grain"></div>
+    </div>
+
+    <div class="intro__ui">
+        <button id="enterBtn" class="intro__enter" type="button">PRESS TO ENTER</button>
+    </div>
+
+    <div id="portal" class="portal" aria-hidden="true">
+        <div class="portal__ring"></div>
+        <div class="portal__core"></div>
+    </div>
+</div>
+
+<div id="pageTransition" class="pageTransition" aria-hidden="true">
+    <video id="transitionVideo" class="pageTransition__video" playsinline preload="auto"></video>
+    <div class="pageTransition__overlay"></div>
+    <div class="pageTransition__skip">PRESS SPACE / ENTER TO SKIP</div>
+</div>
+
+<header class="topbar">
+    <div class="topbar__brand">VALENTIO</div>
+    <nav class="topbar__nav">
+        <a href="#subjects">DESTINATIONS</a>
+        <a href="#brand">BRAND</a>
+        <a href="#contact">CONTACT</a>
+    </nav>
+</header>
+
+<main id="main" class="main" aria-hidden="true">
+    <section id="subjects" class="section homeHero">
+        <div class="container">
+            <div class="homeIntro">
+                <div class="kicker">PERSONAL BRANDING</div>
+                <h1 class="h2">CHOOSE YOUR DESTINATION</h1>
+                <p class="p homeIntro__text">
+                    This site presents different sides of who I am. Each page turns one part of my identity into a clear story with strong visuals, personal value and direct contact.
+                </p>
+                <p class="scrollNotice">
+                    SELECT A PAGE AND SCROLL INSIDE IT FOR STORY, POSITIONING, USP, SKILLS AND CONTACT.
+                </p>
+            </div>
+
+            <div class="cards4">
+                <article
+                        class="tile topicCard"
+                        tabindex="0"
+                        role="button"
+                        data-target="guitar.html"
+                        data-transition="assets/transition-guitar.mp4"
+                        aria-label="Open guitar page"
+                >
+                    <div class="tile__media">
+                        <video muted loop playsinline preload="metadata" data-autoplay>
+                            <source src="assets/guitar.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <div class="tile__body">
+                        <div class="tile__label">🎸 GUITAR</div>
+                        <div class="tile__title">MUSIC, FEELING, STYLE</div>
+                        <p class="tile__text">
+                            Emotional expression, long-term dedication and a personal music identity.
+                        </p>
+                    </div>
+                </article>
+
+                <article
+                        class="tile topicCard"
+                        tabindex="0"
+                        role="button"
+                        data-target="youth.html"
+                        data-transition="assets/transition-jeugd.mp4"
+                        aria-label="Open youth page"
+                >
+                    <div class="tile__media">
+                        <video muted loop playsinline preload="metadata" data-autoplay>
+                            <source src="assets/jeugd.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <div class="tile__body">
+                        <div class="tile__label">🧠 YOUTH</div>
+                        <div class="tile__title">BACKGROUND, STORY, DRIVE</div>
+                        <p class="tile__text">
+                            Identity, roots and the personal foundation behind my mindset and values.
+                        </p>
+                    </div>
+                </article>
+
+                <article
+                        class="tile topicCard"
+                        tabindex="0"
+                        role="button"
+                        data-target="gaming.html"
+                        data-transition="assets/transition-gaming.mp4"
+                        aria-label="Open gaming page"
+                >
+                    <div class="tile__media">
+                        <video muted loop playsinline preload="metadata" data-autoplay>
+                            <source src="assets/gaming.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <div class="tile__body">
+                        <div class="tile__label">🎮 GAMING</div>
+                        <div class="tile__title">COMPETITIVE, SHARP, LOCKED IN</div>
+                        <p class="tile__text">
+                            Competitive focus, fast decision-making and high-pressure performance.
+                        </p>
+                    </div>
+                </article>
+
+                <article
+                        class="tile topicCard"
+                        tabindex="0"
+                        role="button"
+                        data-target="volleyball.html"
+                        data-transition="assets/transition-volleyball-v2.mp4"
+                        aria-label="Open volleyball page"
+                >
+                    <div class="tile__media">
+                        <video muted loop playsinline preload="metadata" data-autoplay>
+                            <source src="assets/volley.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <div class="tile__body">
+                        <div class="tile__label">🏐 VOLLEYBALL</div>
+                        <div class="tile__title">TEAMPLAY, POWER, DISCIPLINE</div>
+                        <p class="tile__text">
+                            Athletic identity, discipline, team awareness and explosive performance.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="brand" class="section">
+        <div class="container">
+            <div class="detailGrid detailGrid--equal">
+                <div class="detailCard">
+                    <h2 class="detailCard__title">🎯 POSITIONING</h2>
+                    <p class="p">
+                        I position myself as someone with multiple strong sides: creative, competitive, disciplined and personal. This site turns those sides into separate brand pages so visitors can quickly understand who I am and what makes my identity consistent.
+                    </p>
+                </div>
+
+                <div class="detailCard">
+                    <h2 class="detailCard__title">🔥 UNIQUE SELLING POINT</h2>
+                    <p class="p">
+                        My unique value is that I do not present just one generic version of myself. I translate different parts of my identity into clear, visual and focused pages, which makes my personal brand more memorable, more structured and easier to connect with.
+                    </p>
+                </div>
+            </div>
+
+            <div class="detailGrid detailGrid--equal">
+                <div class="detailCard">
+                    <h2 class="detailCard__title">💪 WHAT THIS SITE SHOWS</h2>
+                    <div class="skillChips">
+                        <span class="skillChip">CLEAR STRUCTURE</span>
+                        <span class="skillChip">VISUAL CONSISTENCY</span>
+                        <span class="skillChip">PERSONAL STORY</span>
+                        <span class="skillChip">TARGETED PAGES</span>
+                        <span class="skillChip">DIRECT CONTACT</span>
+                        <span class="skillChip">BRAND IDENTITY</span>
+                    </div>
+                    <ul class="detailList">
+                        <li>A clear layout with logical page flow.</li>
+                        <li>Strong visual translation of personality and mood.</li>
+                        <li>Separate pages for separate subjects and experiences.</li>
+                        <li>A direct route from content to contact.</li>
+                    </ul>
+                </div>
+
+                <div class="detailCard">
+                    <h2 class="detailCard__title">🧩 EXPERIENCE</h2>
+                    <p class="p">
+                        The site is built to be easy to follow: short navigation, direct page choices, consistent sections and a clear visual tone. Each destination gives a different experience, but they all stay part of one strong identity.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="section footer">
+        <div class="container">
+            <div class="kicker">CONTACT</div>
+
+            <div class="contactStack">
+                <a class="contactCard" href="mailto:valentiodoelasan@gmail.com">
+                    <span class="contactCard__label">📧 EMAIL</span>
+                    <span class="contactCard__value">valentiodoelasan@gmail.com</span>
+                </a>
+
+                <a
+                        class="contactCard"
+                        href="https://discord.com/app"
+                        target="_blank"
+                        onclick="navigator.clipboard.writeText('valentio.');"
+                >
+                    <span class="contactCard__label">🎮 DISCORD</span>
+                    <span class="contactCard__value">valentio.</span>
+                </a>
+            </div>
+
+            <div class="footer__small">© <span id="year"></span> VALENTIO</div>
+        </div>
+    </footer>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
